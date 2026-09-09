@@ -407,10 +407,10 @@
   .drill-frame video, .drill-frame .drill-embed { width: min(300px, 70vw); aspect-ratio: 9 / 16; border-radius: 14px; border: 0; object-fit: cover; box-shadow: 0 30px 60px -30px rgba(0,0,0,.85); background: var(--ink); display: block; }
   @media (max-width: 900px) { .split .photo.drill-stage { aspect-ratio: auto; } }
   @media (max-width: 720px) {
-    .drill-frame { grid-template-columns: 1fr; gap: 14px; }
-    .fr-left, .fr-right { writing-mode: horizontal-tb; transform: none; }
-    .drill-frame video { justify-self: center; }
-    .fr { flex-wrap: wrap; row-gap: 2px; }
+    .drill-frame { grid-template-columns: 1fr; gap: 14px; justify-items: center; }
+    .fr { flex-wrap: wrap; row-gap: 2px; justify-self: center; width: fit-content; max-width: 100%; }
+    .fr-left, .fr-right { writing-mode: horizontal-tb; transform: none; align-self: center; padding: 12px 34px; clip-path: polygon(0 0, 100% 0, calc(100% - 14px) 50%, 100% 100%, 0 100%, 14px 50%); }
+    .drill-frame video, .drill-frame .drill-embed { justify-self: center; }
   }
   .band-bg { background: var(--band); color: var(--white); }
   .band-bg .tag { color: rgba(255,255,255,.92); }
