@@ -374,9 +374,6 @@
     .msg-left { padding-left: 48px; padding-right: calc((100vw - var(--max)) / 2); }
     .msg-left > * { max-width: 560px; }
   }
-  .msg-photo { position: relative; border-radius: var(--radius); overflow: hidden; padding: clamp(28px, 4vw, 52px) clamp(24px, 3.5vw, 44px); align-content: center; min-height: 500px; background: url("assets/team2.jpg") 50% 32% / cover no-repeat; box-shadow: 0 20px 50px -30px rgba(0,0,0,.8); }
-  .msg-photo::before { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(14,31,39,.45) 0%, rgba(14,31,39,.72) 70%, rgba(14,31,39,.82) 100%); }
-  .msg-photo > * { position: relative; z-index: 1; }
   .msg-right .h2 { max-width: 12ch; }
   .msg-right .tag { margin-top: -4px; }
   .msg-contact { display: grid; gap: 10px; padding-top: 12px; border-top: 1px solid var(--line-dark); }
@@ -524,7 +521,7 @@
       <div class="drill-frame">
         <p class="fr fr-top"><b>1st overall</b><span>Chempro Endo-End Oxenford</span></p>
         <p class="fr fr-left"><b>3rd place</b><span>Queensland State Championships</span></p>
-        <iframe class="drill-embed" src="https://iframe.mediadelivery.net/embed/748079/d86928ed-db31-4037-a6a3-868e428945c0?autoplay=true&muted=true&loop=true&preload=true" loading="lazy" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen title="Leigh Miller demonstrating running movement drills"></iframe>
+        <video class="drill-embed" src="assets/drills-web.mp4" autoplay muted loop playsinline aria-label="Leigh Miller demonstrating running movement drills"></video>
         <p class="fr fr-right"><b>7th in the world</b><span>World Triathlon Duathlon Championships</span></p>
         <p class="fr fr-bottom"><b>World qualifier</b><span>Toowoomba Wellcamp Duathlon</span></p>
       </div>
@@ -539,7 +536,6 @@
         <p class="tag">Build speed, strength, fitness and endurance across a balanced week of coached training.</p>
         <div class="copy">
           <p>Every session has a purpose. Across the week, you develop different parts of your running through intervals, repetitions, drills and controlled effort.</p>
-          <p>Because sessions are coached by effort rather than pace alone, runners of different abilities can train together while still working at the level that’s right for them.</p>
         </div>
         <div class="mini-grid">
           <article class="mini">
