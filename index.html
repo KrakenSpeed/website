@@ -439,6 +439,11 @@
   .footer-contact svg { width: 14px; height: 14px; color: var(--teal); flex: none; }
   .footer-bottom { border-top: 1px solid var(--line); padding: 15px 0 20px; font-size: 12.5px; color: var(--mute); display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px 24px; }
   @media (max-width: 720px) { .footer-main { flex-direction: column; align-items: flex-start; } }
+  /* ---- floating messenger ---- */
+  .msgr-fab { position: fixed; right: 20px; bottom: max(20px, env(safe-area-inset-bottom)); z-index: 90; width: 58px; height: 58px; border-radius: 50%; display: grid; place-items: center; background: radial-gradient(circle at 30% 110%, #FF5280 0%, #A033FF 45%, #0099FF 90%); box-shadow: 0 10px 28px -8px rgba(0,0,0,.45); transition: transform .15s ease, box-shadow .15s ease; }
+  .msgr-fab:hover { transform: scale(1.08); box-shadow: 0 14px 32px -8px rgba(0,0,0,.5); }
+  .msgr-fab svg { width: 30px; height: 30px; color: #fff; }
+  @media (max-width: 640px) { .msgr-fab { width: 52px; height: 52px; right: 16px; } .msgr-fab svg { width: 27px; height: 27px; } }
   body { background: var(--panel); }
 </style>
 </head>
@@ -927,5 +932,8 @@
     });
   }
 </script>
+<a class="msgr-fab" href="https://m.me/KrakenSpeedRunning" target="_blank" rel="noopener" aria-label="Chat with Kraken Speed Running on Messenger">
+  <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2C6.5 2 2 6.1 2 11.3c0 2.9 1.4 5.5 3.7 7.2V22l3.4-1.9c.9.3 1.9.4 2.9.4 5.5 0 10-4.1 10-9.2S17.5 2 12 2zm1 12.4-2.5-2.7-5 2.7 5.5-5.8 2.6 2.7 4.9-2.7-5.5 5.8z"/></svg>
+</a>
 </body>
 </html>
