@@ -1,16 +1,845 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en-AU">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Kraken Speed Running</title>
-<meta name="robots" content="noindex">
+<title>Kraken Speed Running | Coached running club, Gold Coast</title>
+<meta name="description" content="Coached running on the Gold Coast for runners who want more from their training: a parkrun PB, a first 10K, Bridge to Brisbane, or the Gold Coast Marathon. Led by accredited running coach and Australian representative Leigh Miller.">
+<link rel="icon" href="assets/kraken-logo.png" type="image/png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&family=Manrope:wght@400;500;600;700;800&display=swap">
+<style>
+  :root {
+    --ink: #0E1F27;        /* darkest panels, footer */
+    --panel: #163A44;      /* dark teal panels */
+    --panel-2: #1C4854;    /* slightly lighter panel for cards on dark */
+    --band: #2F7A85;       /* stat band */
+    --teal: #1E6F7A;       /* buttons */
+    --teal-hover: #23808C;
+    --aqua: #35C4B5;       /* accent from the logo, calmed */
+    --paper: #F4F7F7;      /* light sections */
+    --white: #FFFFFF;
+    --text: #1B2A31;
+    --text-2: #4E606A;
+    --mute: #7C8B93;
+    --line: rgba(27,42,49,.12);
+    --line-dark: rgba(255,255,255,.14);
+
+    --display: "Barlow Condensed", "Arial Narrow", sans-serif;
+    --body: "Manrope", "Segoe UI", Helvetica, Arial, sans-serif;
+
+    --max: 1200px;
+    --gutter: clamp(20px, 5vw, 64px);
+    --radius: 10px;
+    --pill: 999px;
+
+    /* type scale: one size per level */
+    --fs-h1: clamp(44px, 5.4vw, 72px);
+    --fs-h2: clamp(36px, 4.2vw, 56px);
+    --fs-h3: 22px;          /* card and plan titles */
+    --fs-sub: clamp(18px, 1.6vw, 21px);   /* section taglines */
+    --fs-body: 16.5px;      /* paragraphs */
+    --fs-card: 15px;        /* text inside cards and answers */
+    --fs-label: 12.5px;     /* uppercase labels */
+  }
+
+  *, *::before, *::after { box-sizing: border-box; }
+  html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+
+  body { margin: 0; font-family: var(--body); font-size: var(--fs-body); line-height: 1.65; color: var(--text); background: var(--paper); -webkit-font-smoothing: antialiased; }
+  img { max-width: 100%; display: block; }
+  figure { margin: 0; }
+  a { color: inherit; }
+  h1, h2, h3, h4 { margin: 0; font-family: var(--display); font-weight: 700; line-height: 1.02; text-wrap: balance; letter-spacing: .005em; }
+  p { margin: 0; }
+  ul { margin: 0; padding: 0; list-style: none; }
+  strong { font-weight: 700; }
+  :focus-visible { outline: 3px solid var(--aqua); outline-offset: 3px; }
+
+  .wrap { width: min(var(--max), 100% - 2 * var(--gutter)); margin-inline: auto; }
+
+  /* ---- type ---- */
+  .h1 { font-size: var(--fs-h1); }
+  .h2 { font-size: var(--fs-h2); }
+  .h3 { font-size: var(--fs-h3); }
+  .tag { font-family: var(--body); font-weight: 800; font-size: var(--fs-sub); letter-spacing: -.01em; color: var(--aqua); }
+  .light .tag { color: var(--teal); }
+  .copy { display: grid; gap: 14px; }
+  .copy p { max-width: 58ch; font-size: var(--fs-body); color: rgba(255,255,255,.82); }
+  .copy p strong { color: var(--white); }
+  .light .copy p { color: var(--text-2); }
+  .light .copy p strong { color: var(--text); }
+  .kicker { font-family: var(--body); font-weight: 700; font-size: var(--fs-label); letter-spacing: .14em; text-transform: uppercase; color: var(--aqua); }
+  .light .kicker { color: var(--teal); }
+
+  /* ---- buttons ---- */
+  .btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; font-family: var(--body); font-weight: 700; font-size: 15.5px; text-decoration: none; padding: 14px 26px; border-radius: var(--pill); border: 2px solid transparent; cursor: pointer; transition: background .15s ease, border-color .15s ease, color .15s ease, transform .15s ease; text-align: center; line-height: 1.2; }
+  .btn:hover { transform: translateY(-1px); }
+  .btn-fill { background: var(--teal); color: var(--white); border-color: var(--teal); }
+  .btn-fill:hover { background: var(--teal-hover); border-color: var(--teal-hover); }
+  .btn-line { background: transparent; color: var(--white); border-color: rgba(255,255,255,.5); }
+  .btn-line:hover { border-color: var(--white); }
+  .light .btn-line { color: var(--teal); border-color: rgba(30,111,122,.45); }
+  .light .btn-line:hover { border-color: var(--teal); }
+  .btn-sm { padding: 10px 18px; font-size: 14px; }
+  .actions { display: flex; flex-wrap: wrap; gap: 12px; }
+
+  /* ---- top bar + header ---- */
+  .topbar { background: var(--ink); color: rgba(255,255,255,.85); font-size: var(--fs-label); font-weight: 600; letter-spacing: .02em; }
+  .topbar .wrap { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 8px clamp(40px, 13vw, 200px); padding: 8px 0; }
+  .topbar a { text-decoration: none; display: inline-flex; align-items: center; gap: 8px; }
+  .topbar a:hover { color: var(--aqua); }
+  .topbar svg { width: 14px; height: 14px; color: var(--aqua); }
+
+  .site-header { position: sticky; top: 0; z-index: 50; background: rgba(255,255,255,.94); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border-bottom: 1px solid var(--line); }
+  .site-header .wrap { display: flex; align-items: center; justify-content: space-between; gap: 24px; height: 74px; }
+  .brand { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+  .brand img { width: 46px; height: 46px; object-fit: contain; }
+  .brand-name { font-family: var(--display); font-weight: 700; font-size: 22px; line-height: .95; color: var(--ink); text-transform: uppercase; letter-spacing: .02em; }
+  .brand-name span { display: block; font-family: var(--body); font-size: 11px; font-weight: 700; letter-spacing: .18em; color: var(--teal); margin-top: 3px; }
+  .nav { display: flex; align-items: center; gap: 28px; }
+  .nav a { font-weight: 600; font-size: 15px; text-decoration: none; color: var(--text); white-space: nowrap; }
+  .nav a:hover { color: var(--teal); }
+  .header-cta { display: flex; align-items: center; gap: 12px; }
+  .nav-toggle { display: none; background: none; border: 0; color: var(--ink); padding: 8px; cursor: pointer; }
+  .nav-toggle svg { width: 26px; height: 26px; }
+  @media (max-width: 1000px) {
+    .nav { display: none; }
+    .nav.open { display: flex; position: absolute; left: 0; right: 0; top: 74px; flex-direction: column; align-items: stretch; gap: 0; background: var(--white); border-bottom: 1px solid var(--line); padding: 6px 0 12px; }
+    .nav.open a { padding: 14px var(--gutter); border-top: 1px solid var(--line); }
+    .nav-toggle { display: inline-flex; }
+  }
+  @media (max-width: 640px) { .header-cta .btn { display: none; } .topbar .wrap { gap: 6px 20px; font-size: 12.5px; } }
+
+  /* ---- split rows (the alternating pattern) ---- */
+  .split { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); min-height: 560px; }
+  .split .panel { background: var(--panel); color: var(--white); display: flex; align-items: center; padding: clamp(56px, 7vw, 96px) var(--gutter); }
+  .split .panel-inner { width: min(560px, 100%); display: grid; gap: 18px; }
+  .split .panel-inner .h2, .split .panel-inner .h1 { margin-bottom: -4px; }
+  .split .photo { position: relative; overflow: hidden; min-height: 360px; }
+  .split .photo img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+  .split .photo figcaption { position: absolute; left: 0; right: 0; bottom: 0; padding: 48px 24px 18px; background: linear-gradient(0deg, rgba(14,31,39,.7), transparent); color: rgba(255,255,255,.92); font-size: var(--fs-label); font-weight: 700; letter-spacing: .1em; text-transform: uppercase; }
+  .split.flip .photo { order: -1; }
+  /* panel content aligned to the inner container edge on wide screens */
+  @media (min-width: 1201px) {
+    .split .panel { padding-left: calc((100vw - var(--max)) / 2); padding-right: 48px; }
+    .split.flip .panel { padding-left: 48px; padding-right: calc((100vw - var(--max)) / 2); justify-content: flex-end; }
+  }
+  @media (max-width: 900px) {
+    .split { grid-template-columns: minmax(0, 1fr); min-height: auto; }
+    .split .photo { order: -1; min-height: 0; width: 100%; aspect-ratio: 4 / 3; }
+    .split .panel { padding: 48px var(--gutter) 56px; }
+  }
+
+  /* ---- hero ---- */
+  .hero .panel { background: var(--ink); }
+  .hero .photo img { object-position: 55% 60%; }
+  .hero .h1 .accent { color: var(--aqua); }
+  .hero-sub { font-weight: 800; font-size: var(--fs-sub); color: var(--white); line-height: 1.4; }
+  .hero .copy p { font-size: var(--fs-body); }
+  .hero-strip { display: flex; flex-wrap: wrap; gap: 8px 22px; padding-top: 18px; border-top: 1px solid var(--line-dark); font-size: var(--fs-card); font-weight: 700; color: rgba(255,255,255,.9); }
+  .hero-strip li { display: inline-flex; align-items: center; gap: 8px; }
+  .hero-strip svg { width: 15px; height: 15px; color: var(--aqua); flex: none; }
+
+  /* ---- stat band ---- */
+  .band { background: var(--band); color: var(--white); }
+  .band .wrap { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; padding: 34px 0; text-align: center; }
+  .band b { display: block; font-family: var(--display); font-weight: 700; font-size: 46px; line-height: 1; }
+  .band b sup { font-size: 22px; vertical-align: top; line-height: 1; margin-left: 2px; }
+  .band span { display: block; font-size: var(--fs-card); font-weight: 600; margin-top: 6px; color: rgba(255,255,255,.9); }
+  @media (max-width: 720px) { .band .wrap { grid-template-columns: repeat(2, 1fr); gap: 24px 12px; } .band b { font-size: 38px; } }
+
+  /* ---- generic sections ---- */
+  .section { padding: clamp(64px, 8vw, 112px) 0; }
+  .light { background: var(--paper); color: var(--text); }
+  .white { background: var(--white); color: var(--text); }
+  .dark { background: var(--panel); color: var(--white); }
+  .darker { background: var(--ink); color: var(--white); }
+  .section-head { display: grid; gap: 12px; max-width: 760px; margin-bottom: clamp(32px, 4vw, 52px); }
+  .section-head .copy { margin-top: 6px; }
+
+  /* ---- cards ---- */
+  .cards { display: grid; gap: 16px; }
+  .cards-4 { grid-template-columns: repeat(4, 1fr); }
+  .cards-3 { grid-template-columns: repeat(3, 1fr); }
+  .card { background: var(--white); color: var(--text); border-radius: var(--radius); padding: 26px 24px 28px; display: grid; gap: 10px; align-content: start; box-shadow: 0 1px 0 rgba(27,42,49,.06), 0 12px 30px -22px rgba(27,42,49,.35); }
+  .card h3 { font-size: var(--fs-h3); }
+  .card p { font-size: var(--fs-card); line-height: 1.6; color: var(--text-2); }
+  .card p strong { color: var(--text); }
+  .card .lead { font-weight: 800; color: var(--text); font-size: var(--fs-card); }
+  .card .btn { justify-self: start; margin-top: 6px; }
+  .card-num { font-family: var(--display); font-weight: 700; font-size: 44px; line-height: 1; color: var(--teal); }
+  .dark .card, .darker .card { background: var(--white); }
+  @media (max-width: 1000px) { .cards-4 { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 720px) { .cards-3 { grid-template-columns: 1fr; } }
+  @media (max-width: 540px) { .cards-4 { grid-template-columns: 1fr; } }
+
+  .forme-close { margin-top: 28px; font-family: var(--display); font-weight: 700; font-size: clamp(24px, 2.6vw, 32px); color: var(--ink); }
+  .forme-close span { color: var(--teal); }
+
+  /* ---- sessions ---- */
+  .sessions .card { background: var(--panel-2); color: var(--white); box-shadow: none; border: 1px solid var(--line-dark); }
+  .sessions .card h3 { color: var(--white); }
+  .sessions .card p { color: rgba(255,255,255,.78); }
+  .sessions .card .lead { color: var(--white); }
+  .sessions .day { font-size: 13px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--aqua); }
+  .sessions-foot { margin-top: 32px; display: grid; grid-template-columns: 1fr auto; gap: 18px 40px; align-items: center; padding-top: 28px; border-top: 1px solid var(--line-dark); }
+  .sessions-foot p { color: rgba(255,255,255,.82); max-width: 60ch; }
+  .sessions-foot p strong { color: var(--white); }
+  @media (max-width: 720px) { .sessions-foot { grid-template-columns: 1fr; } }
+
+  /* ---- coach extras ---- */
+  .creds { display: grid; gap: 8px; padding-top: 6px; }
+  .creds li { display: flex; align-items: center; gap: 12px; font-weight: 700; font-size: var(--fs-body); color: var(--white); }
+  .creds svg { width: 20px; height: 20px; color: var(--aqua); flex: none; }
+  .coach-role { font-weight: 800; font-size: var(--fs-label); letter-spacing: .1em; text-transform: uppercase; color: var(--aqua); }
+
+  /* ---- review ---- */
+  .review { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 4fr); gap: clamp(32px, 5vw, 72px); align-items: center; }
+  .stars { display: flex; gap: 4px; color: var(--teal); }
+  .stars svg { width: 22px; height: 22px; }
+  .review blockquote { margin: 0; font-family: var(--display); font-weight: 600; font-size: clamp(24px, 2.4vw, 32px); line-height: 1.22; color: var(--text); text-wrap: pretty; }
+  .review-by { display: grid; gap: 2px; margin-top: 4px; }
+  .review-by b { font-size: 17px; font-weight: 800; }
+  .review-by span { font-size: 13px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--mute); }
+  .review-side { display: grid; gap: 18px; padding: 28px; background: var(--white); border-radius: var(--radius); box-shadow: 0 12px 30px -22px rgba(27,42,49,.35); }
+  .review-side b { font-family: var(--display); font-weight: 700; font-size: 56px; line-height: 1; color: var(--teal); }
+  .review-side p { color: var(--text-2); font-size: 15px; }
+  @media (max-width: 860px) { .review { grid-template-columns: 1fr; } }
+
+  /* ---- pricing ---- */
+  .plans { display: grid; grid-template-columns: repeat(4, 1fr); grid-auto-rows: 1fr; gap: 16px; }
+  .plan { position: relative; background: var(--white); border-radius: var(--radius); padding: 30px 26px; display: flex; flex-direction: column; gap: 10px; border: 1px solid var(--line); }
+  .plan .btn { align-self: flex-start; margin-top: auto; }
+  .plan-body { display: grid; gap: 8px; align-content: start; }
+  .plan-feature { border-color: var(--teal); box-shadow: 0 16px 36px -24px rgba(30,111,122,.5); }
+  .plan-flag { position: absolute; top: -12px; left: 24px; background: var(--teal); color: var(--white); font-size: var(--fs-label); font-weight: 800; letter-spacing: .12em; text-transform: uppercase; padding: 5px 12px; border-radius: var(--pill); }
+  .plan h3 { font-size: var(--fs-h3); }
+  .price { font-family: var(--display); font-weight: 700; font-size: 60px; line-height: .95; color: var(--ink); display: flex; align-items: baseline; gap: 8px; flex-wrap: wrap; }
+  .price.free { color: var(--teal); }
+  .price small { font-family: var(--body); font-size: var(--fs-label); font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--mute); }
+  .plan p { font-size: var(--fs-card); color: var(--text-2); }
+  .plan p strong { color: var(--text); }
+  .plan .kids { font-weight: 800; color: var(--text); }
+  .plan .kids em { font-style: normal; color: var(--teal); }
+  .pricing-note { margin-top: 24px; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 16px 32px; padding-top: 24px; border-top: 1px solid var(--line); }
+  .pricing-note p { font-weight: 800; font-size: var(--fs-body); color: var(--text); }
+  .support { margin-top: clamp(40px, 5vw, 64px); padding: 28px 30px; background: var(--white); border-radius: var(--radius); display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 16px 40px; align-items: center; border: 1px solid var(--line); }
+  .support h3 { font-size: var(--fs-h3); margin-bottom: 8px; }
+  .support p { color: var(--text-2); font-size: var(--fs-card); max-width: 60ch; }
+  .support p strong { color: var(--text); }
+  @media (max-width: 1100px) { .plans { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 640px) { .plans { grid-template-columns: 1fr; } }
+
+  /* ---- CTA band ---- */
+  .cta { position: relative; color: var(--white); background: var(--ink); overflow: hidden; isolation: isolate; }
+  .cta-media { position: absolute; inset: 0; z-index: -2; }
+  .cta-media img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 35%; opacity: .55; }
+  .cta-scrim { position: absolute; inset: 0; z-index: -1; background: linear-gradient(90deg, rgba(14,31,39,.92) 0%, rgba(14,31,39,.72) 55%, rgba(14,31,39,.45) 100%); }
+  .cta .wrap { padding: clamp(72px, 10vw, 128px) 0; display: grid; gap: 16px; }
+  .cta .h2 { max-width: 14ch; }
+  .cta p { font-size: var(--fs-body); color: rgba(255,255,255,.88); max-width: 46ch; }
+  .cta .actions { margin-top: 8px; }
+
+  /* ---- FAQ ---- */
+  .faq-wrap { max-width: 880px; }
+  .faq-head { margin-bottom: clamp(24px, 3vw, 36px); }
+  .faq-list { display: grid; border-top: 1px solid var(--line); }
+  details { border-bottom: 1px solid var(--line); }
+  summary { list-style: none; cursor: pointer; display: flex; align-items: center; justify-content: space-between; gap: 20px; padding: 20px 0; font-family: var(--display); font-weight: 700; font-size: var(--fs-h3); line-height: 1.2; }
+  summary::-webkit-details-marker { display: none; }
+  summary .plus { flex: none; position: relative; width: 28px; height: 28px; border: 2px solid var(--teal); border-radius: 50%; transition: transform .2s ease, background .2s ease; }
+  summary .plus::before, summary .plus::after { content: ""; position: absolute; left: 50%; top: 50%; width: 12px; height: 2px; background: var(--teal); transform: translate(-50%, -50%); }
+  summary .plus::after { transform: translate(-50%, -50%) rotate(90deg); }
+  details[open] summary .plus { transform: rotate(45deg); background: var(--teal); }
+  details[open] summary .plus::before, details[open] summary .plus::after { background: var(--white); }
+  .answer { display: grid; gap: 8px; padding: 0 56px 22px 0; }
+  .answer p { color: var(--text-2); font-size: var(--fs-card); max-width: 62ch; }
+  .answer p strong { color: var(--text); }
+  @media (max-width: 800px) { .answer { padding-right: 0; } }
+
+  /* ---- footer ---- */
+  .site-footer { background: var(--ink); color: rgba(255,255,255,.78); padding: clamp(56px, 7vw, 88px) 0 calc(36px + 84px); }
+  .footer-grid { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 3fr) minmax(0, 4fr); gap: 36px 56px; }
+  .footer-brand { display: grid; gap: 14px; align-content: start; }
+  .footer-brand img { width: 88px; }
+  .footer-brand .brand-name { color: var(--white); font-size: 24px; }
+  .footer-brand p { font-weight: 600; font-size: var(--fs-body); color: var(--white); }
+  .footer-h { font-size: var(--fs-label); font-weight: 800; letter-spacing: .16em; text-transform: uppercase; color: var(--aqua); margin-bottom: 16px; }
+  .footer-times { display: grid; gap: 8px; font-size: var(--fs-card); font-weight: 600; }
+  .footer-times li { display: flex; justify-content: space-between; gap: 16px; padding-bottom: 8px; border-bottom: 1px solid var(--line-dark); white-space: nowrap; }
+  .footer-times li span { color: rgba(255,255,255,.55); }
+  .footer-contact { display: grid; gap: 10px; }
+  .footer-contact a { display: flex; align-items: center; gap: 10px; text-decoration: none; color: rgba(255,255,255,.88); font-weight: 600; font-size: var(--fs-card); }
+  .footer-contact a:hover { color: var(--aqua); }
+  .footer-contact svg { width: 18px; height: 18px; color: var(--aqua); flex: none; }
+  .footer-bottom { margin-top: 48px; padding-top: 22px; border-top: 1px solid var(--line-dark); display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; align-items: center; }
+  .footer-motto { font-family: var(--display); font-weight: 700; font-size: 22px; letter-spacing: .04em; text-transform: uppercase; color: var(--white); }
+  .footer-motto span { color: var(--aqua); }
+  .footer-bottom small { font-size: var(--fs-label); color: rgba(255,255,255,.5); }
+  @media (max-width: 860px) { .footer-grid { grid-template-columns: 1fr 1fr; } }
+  @media (max-width: 560px) { .footer-grid { grid-template-columns: 1fr; } }
+  @media (min-width: 641px) { .site-footer { padding-bottom: clamp(36px, 4vw, 56px); } }
+
+  /* ---- mobile bar ---- */
+  .mobile-bar { display: none; }
+  @media (max-width: 640px) {
+    .mobile-bar { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; position: fixed; left: 0; right: 0; bottom: 0; z-index: 60; padding: 10px 14px calc(10px + env(safe-area-inset-bottom)); background: rgba(255,255,255,.96); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border-top: 1px solid var(--line); }
+    .mobile-bar .btn { padding: 12px 10px; font-size: 14.5px; }
+    .mobile-bar .btn-line { color: var(--teal); border-color: rgba(30,111,122,.45); }
+  }
+
+
+  /* ---- cards inside split panels ---- */
+  .split .panel-inner.wide { width: min(640px, 100%); }
+  .mini-grid { display: grid; grid-template-columns: 1fr 1fr; grid-auto-rows: 1fr; gap: 12px; }
+  .mini-stack { display: grid; gap: 12px; }
+  .mini { background: var(--white); color: var(--text); border-radius: var(--radius); padding: 18px 18px 20px; display: grid; gap: 6px; align-content: start; box-shadow: 0 10px 26px -20px rgba(14,31,39,.6); }
+  .mini h3 { font-size: var(--fs-h3); line-height: 1.05; }
+  .mini p { font-size: var(--fs-card); line-height: 1.5; color: var(--text-2); }
+  .mini p strong { color: var(--text); }
+  .mini .ico { width: 34px; height: 34px; border-radius: 9px; background: rgba(30,111,122,.1); color: var(--teal); display: grid; place-items: center; margin-bottom: 4px; }
+  .mini .ico svg { width: 20px; height: 20px; }
+  .mini .day { font-size: var(--fs-label); font-weight: 800; letter-spacing: .12em; text-transform: uppercase; color: var(--teal); }
+  .mini .num { font-family: var(--display); font-weight: 700; font-size: 30px; line-height: 1; color: var(--teal); }
+  .mini-row { grid-template-columns: 44px 1fr; gap: 14px; align-items: start; }
+  .mini-row > div:last-child { display: grid; gap: 4px; }
+  .split .photo.zoom img { transform: scale(1.45); transform-origin: 42% 60%; }
+  .panel-foot { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 20px; padding-top: 4px; }
+  .panel-foot p { font-size: var(--fs-card); color: rgba(255,255,255,.8); max-width: 44ch; }
+  .panel-foot p strong { color: var(--white); }
+  .one-team { font-family: var(--display); font-weight: 700; font-size: var(--fs-h3); color: var(--white); }
+  .one-team span { color: var(--aqua); }
+  @media (max-width: 520px) { .mini-grid { grid-template-columns: 1fr; } }
+
+  /* ---- team statement band ---- */
+  .team-band { background: var(--panel); color: var(--white); }
+  .team-band .wrap { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: 24px 72px; align-items: start; padding: clamp(64px, 8vw, 104px) 0; }
+  .team-band .h2 { max-width: 12ch; }
+  .team-band .tag { margin-top: 10px; }
+  @media (max-width: 860px) { .team-band .wrap { grid-template-columns: 1fr; } }
+
+
+  /* ---- review cards ---- */
+  .reviews-head { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 16px 40px; align-items: end; margin-bottom: clamp(28px, 3vw, 40px); }
+  .reviews-head .h2 { max-width: 20ch; }
+  .rec { display: flex; align-items: center; gap: 14px; padding: 14px 18px; background: var(--white); border-radius: var(--radius); border: 1px solid var(--line); }
+  .rec b { font-family: var(--display); font-weight: 700; font-size: 32px; line-height: 1; color: var(--teal); }
+  .rec span { font-size: var(--fs-card); font-weight: 600; color: var(--text-2); max-width: 18ch; line-height: 1.3; }
+  .rcards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  .rcard { background: var(--white); border-radius: var(--radius); padding: 26px 24px; display: grid; grid-template-rows: auto 1fr auto; gap: 14px; box-shadow: 0 1px 0 rgba(27,42,49,.06), 0 12px 30px -22px rgba(27,42,49,.35); }
+  .rcard .stars svg { width: 18px; height: 18px; }
+  .rcard blockquote { margin: 0; font-size: var(--fs-card); line-height: 1.6; color: var(--text); }
+  .rcard blockquote strong { color: var(--text); }
+  .rcard .who { display: grid; gap: 1px; padding-top: 12px; border-top: 1px solid var(--line); }
+  .rcard .who b { font-size: var(--fs-card); font-weight: 800; }
+  .rcard .who span { font-size: var(--fs-label); font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--mute); }
+  .rcard.placeholder { border: 2px dashed rgba(30,111,122,.4); box-shadow: none; background: rgba(255,255,255,.6); }
+  .rcard.placeholder blockquote, .rcard.placeholder .who b { color: var(--teal); }
+  .reviews-foot { margin-top: 20px; display: flex; flex-wrap: wrap; align-items: center; gap: 12px 24px; }
+  .reviews-foot p { font-size: var(--fs-card); color: var(--text-2); }
+  .split .photo.zoom-team img { transform: scale(1.35); transform-origin: 30% 62%; }
+  @media (max-width: 900px) { .rcards { grid-template-columns: 1fr; } .reviews-head { grid-template-columns: 1fr; align-items: start; } }
+
+
+  /* ---- message section ---- */
+  .msg { background: var(--panel); color: var(--white); }
+  .msg .wrap { display: grid; grid-template-columns: minmax(0, 6fr) minmax(0, 5fr); gap: 32px clamp(40px, 6vw, 88px); align-items: center; padding: clamp(64px, 8vw, 104px) 0; }
+  .msg-left { display: grid; gap: 14px; }
+  .msg-card { background: var(--white); color: var(--text); border-radius: var(--radius); padding: 30px 28px 28px; display: grid; gap: 16px; box-shadow: 0 16px 40px -28px rgba(14,31,39,.7); }
+  .msg-card h3 { font-size: var(--fs-h3); }
+  .msg-card > p { font-size: var(--fs-card); color: var(--text-2); }
+  .form { display: grid; gap: 12px; }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .field { display: grid; gap: 6px; }
+  .field label { font-size: var(--fs-label); font-weight: 800; letter-spacing: .08em; text-transform: uppercase; color: var(--text-2); }
+  .field input, .field textarea { width: 100%; font: inherit; font-size: var(--fs-card); color: var(--text); background: var(--paper); border: 1px solid var(--line); border-radius: 8px; padding: 12px 14px; }
+  .field input:focus, .field textarea:focus { outline: 2px solid var(--teal); outline-offset: 0; border-color: var(--teal); background: var(--white); }
+  .field textarea { min-height: 128px; resize: vertical; }
+  .form .btn { justify-self: start; }
+  .form-note { font-size: var(--fs-label); color: var(--mute); letter-spacing: 0; text-transform: none; }
+  .msg-alt { background: var(--white); color: var(--text); border-radius: var(--radius); padding: 16px 22px; display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 8px 14px; font-weight: 700; font-size: var(--fs-body); }
+  .msg-alt a { color: var(--teal); text-decoration: none; display: inline-flex; align-items: center; gap: 8px; }
+  .msg-alt a:hover { text-decoration: underline; }
+  .msg-alt svg { width: 18px; height: 18px; }
+  .msg-right { display: grid; gap: 16px; }
+  .msg-right .h2 { max-width: 12ch; }
+  .msg-right .tag { margin-top: -4px; }
+  .msg-contact { display: grid; gap: 10px; padding-top: 12px; border-top: 1px solid var(--line-dark); }
+  .msg-contact a { display: flex; align-items: center; gap: 10px; text-decoration: none; color: rgba(255,255,255,.9); font-weight: 600; font-size: var(--fs-card); }
+  .msg-contact a:hover { color: var(--aqua); }
+  .msg-contact svg { width: 18px; height: 18px; color: var(--aqua); flex: none; }
+  @media (max-width: 900px) { .msg .wrap { grid-template-columns: 1fr; } .msg-right { order: -1; } }
+  @media (max-width: 560px) { .form-row { grid-template-columns: 1fr; } }
+
+  /* ---- reveal ---- */
+  .reveal { opacity: 0; transform: translateY(14px); transition: opacity .6s ease, transform .6s ease; }
+  .reveal.in { opacity: 1; transform: none; }
+  @media (prefers-reduced-motion: reduce) { .reveal { opacity: 1; transform: none; transition: none; } }
+  /* section-by-section build: page currently ends at the hero; keep underrun dark */
+
+  /* ---- drills video section ---- */
+  .drill-stage { background: radial-gradient(120% 120% at 30% 20%, #1C4854, var(--ink)); display: flex; align-items: center; justify-content: center; padding: clamp(40px, 5vw, 72px) var(--gutter); }
+  @media (min-width: 1201px) { .drill-stage { justify-content: flex-start; padding-left: calc((100vw - var(--max)) / 2); } }
+  .drill-frame { display: grid; grid-template-columns: auto auto auto; justify-content: center; align-items: center; gap: 16px 18px; }
+  .fr { display: flex; gap: 12px; align-items: center; justify-content: center; margin: 0; }
+  .fr b { color: var(--aqua); font-family: var(--display); font-weight: 700; text-transform: uppercase; font-size: 18px; letter-spacing: .05em; white-space: nowrap; line-height: 1; }
+  .fr span { color: rgba(255,255,255,.85); font-size: 14px; line-height: 1.3; }
+  .fr-top, .fr-bottom { grid-column: 1 / -1; }
+  .fr-left { writing-mode: vertical-rl; transform: rotate(180deg); }
+  .fr-right { writing-mode: vertical-rl; }
+  .drill-frame video { width: min(300px, 70vw); aspect-ratio: 9 / 16; border-radius: 14px; object-fit: cover; box-shadow: 0 30px 60px -30px rgba(0,0,0,.85); background: var(--ink); }
+  @media (max-width: 900px) { .split .photo.drill-stage { aspect-ratio: auto; } }
+  @media (max-width: 720px) {
+    .drill-frame { grid-template-columns: 1fr; gap: 14px; }
+    .fr-left, .fr-right { writing-mode: horizontal-tb; transform: none; }
+    .drill-frame video { justify-self: center; }
+    .fr { flex-wrap: wrap; row-gap: 2px; }
+  }
+  .band-bg { background: var(--band); color: var(--white); }
+  .band-bg .tag { color: rgba(255,255,255,.92); }
+  .band-bg .plan { color: var(--text); }
+  .band-bg .rcard { background: var(--panel); color: rgba(255,255,255,.88); box-shadow: 0 18px 40px -28px rgba(0,0,0,.7); position: relative; }
+  .band-bg .rcard .stars { color: var(--aqua); }
+  .band-bg .rcard blockquote { color: rgba(255,255,255,.88); max-height: 176px; overflow-y: auto; padding-right: 10px; scrollbar-width: thin; scrollbar-color: rgba(255,255,255,.35) transparent; }
+  .band-bg .rcard blockquote::-webkit-scrollbar { width: 6px; }
+  .band-bg .rcard blockquote::-webkit-scrollbar-thumb { background: rgba(255,255,255,.3); border-radius: 3px; }
+  .band-bg .rcard .who { border-top-color: var(--line-dark); grid-template-columns: auto 1fr auto; align-items: center; gap: 4px 12px; }
+  .band-bg .rcard .who b { color: var(--white); }
+  .band-bg .rcard .who span { color: var(--aqua); }
+  .who-avatar { width: 42px; height: 42px; border-radius: 50%; background: rgba(255,255,255,.12); border: 1px dashed rgba(255,255,255,.35); display: grid; place-items: center; color: rgba(255,255,255,.55); grid-row: span 2; }
+  .who-avatar svg { width: 22px; height: 22px; }
+  .who-fb, .band-bg .rcard .who span.who-fb { grid-row: span 2; color: #1877F2; align-self: end; }
+  .who-fb svg { width: 27px; height: 27px; }
+  .band-bg .rcard .who > div { display: grid; gap: 1px; }
+  .band-bg .plans { grid-template-columns: repeat(3, 1fr); }
+  @media (max-width: 1100px) { .band-bg .plans { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 640px) { .band-bg .plans { grid-template-columns: 1fr; } }
+  .rcard blockquote p + p { margin-top: 10px; }
+  body { background: var(--panel); }
+</style>
 </head>
-<body style="font-family:system-ui,sans-serif;background:#0b1f2a;color:#f5f5f5;display:grid;place-items:center;min-height:100vh;margin:0">
-<main style="text-align:center;padding:2rem">
-<h1>Kraken Speed Running</h1>
-<p>New website on its way.</p>
-<p><a href="mailto:hello@krakenspeedrunning.com.au" style="color:#7fd1de">hello@krakenspeedrunning.com.au</a></p>
+<body>
+
+<div class="topbar">
+  <div class="wrap">
+    <a href="mailto:hello@krakenspeedrunning.com.au"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>hello@krakenspeedrunning.com.au</a>
+    <a href="tel:+61400797038"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 2 .7 2.9a2 2 0 0 1-.5 2.1L8 10a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.5c.9.3 1.9.6 2.9.7a2 2 0 0 1 1.7 2z"/></svg>0400 797 038</a>
+    <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:14px;height:14px;color:#35C4B5;vertical-align:-2px;margin-right:6px"><path d="M12 22s7-6.3 7-12a7 7 0 1 0-14 0c0 5.7 7 12 7 12z"/><circle cx="12" cy="10" r="2.5"/></svg>Gold Coast QLD</span>
+  </div>
+</div>
+
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="#top" aria-label="Kraken Speed Running home">
+      <img src="assets/kraken-logo.png" alt="" width="46" height="46">
+      <span class="brand-name">Kraken<span>Speed Running</span></span>
+    </a>
+    <nav class="nav" id="nav" aria-label="Primary">
+      <a href="#top">Home</a>
+      <a href="#coach">Your Coach</a>
+      <a href="#gallery">Gallery</a>
+      <a href="#pricing">Pricing</a>
+      <a href="#performance-coaching">Performance Coaching</a>
+      <a href="#contact">Contact</a>
+    </nav>
+    <div class="header-cta">
+      <a class="btn btn-fill btn-sm" href="https://m.me/KrakenSpeedRunning" target="_blank" rel="noopener">Try a free session</a>
+      <button class="nav-toggle" id="navToggle" aria-expanded="false" aria-controls="nav" aria-label="Open menu">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main id="top">
+
+  <!-- HERO: text | photo -->
+  <section class="split hero">
+    <div class="panel">
+      <div class="panel-inner">
+        <h1 class="h1">Train with Purpose. <span class="accent">Race with Confidence.</span></h1>
+        <p class="hero-sub">Coached running on the Gold Coast for runners who want more from their training: a parkrun PB, a first 10K, Bridge to Brisbane, or the Gold Coast Marathon.</p>
+        <div class="copy">
+          <p>At Kraken Running, every session has a purpose.</p>
+          <p>You’ll train with structure, receive coaching that meets you at your level, and build the strength, fitness and confidence to perform when race day arrives.</p>
+          <p>Whether you’re chasing a new PB, stepping up in distance or simply becoming a stronger runner, you’ll be surrounded by a team that understands the work, shares the goal and celebrates the result.</p>
+          <p>Kraken Running is led by accredited running coach and Australian representative <strong>Leigh Miller</strong>.</p>
+        </div>
+        <div class="actions">
+          <a class="btn btn-fill" href="https://m.me/KrakenSpeedRunning" target="_blank" rel="noopener">Try a free session</a>
+          <a class="btn btn-line" href="https://m.me/KrakenSpeedRunning" target="_blank" rel="noopener">Message Leigh</a>
+        </div>
+        
+      </div>
+    </div>
+    <figure class="photo">
+      <img src="assets/team-hero.jpg" alt="The Kraken Speed Running team wearing their finisher medals at the ASICS Gold Coast Marathon" fetchpriority="high">
+      <figcaption>Kraken at the Gold Coast Marathon</figcaption>
+    </figure>
+  </section>
+
+  <!-- STAT BAND -->
+  <section class="band" aria-label="Kraken at a glance">
+    <div class="wrap">
+      <div><b>Free</b><span>Your first group session</span></div>
+      <div><b>4</b><span>Coached sessions every week</span></div>
+      <div><b>$14</b><span>Per session, pay as you go</span></div>
+      <div><b>$7</b><span>Kids, per session</span></div>
+    </div>
+  </section>
+
+  <!-- DRILLS: framed video left (aligned with hero text edge) | text right -->
+  <section class="split flip" id="drills">
+    <div class="panel">
+      <div class="panel-inner">
+        <h2 class="h2">Performance Starts with How You Move.</h2>
+        <div class="copy">
+          <p>At Kraken, drills aren’t filler before the “real” session. They’re part of the real work.</p>
+          <p>Leigh places a strong emphasis on movement drills because peak performance isn’t built on fitness alone. Coordination, control, rhythm, posture and efficiency all influence how effectively you can put that fitness into your running.</p>
+          <p>Watch Leigh move and you can see the difference: fluid, precise and controlled.</p>
+          <p>That same attention to movement is built into Kraken training, helping runners develop the mechanics and body awareness to run with greater efficiency, maintain form under fatigue and get more from every stride.</p>
+          <p>It’s a level of technical coaching that goes beyond simply prescribing kilometres and intervals.</p>
+          <p>And it comes from an athlete who has performed at the highest levels.</p>
+        </div>
+      </div>
+    </div>
+    <div class="photo drill-stage">
+      <div class="drill-frame">
+        <p class="fr fr-top"><b>1st overall</b><span>Chempro Endo-End Oxenford</span></p>
+        <p class="fr fr-left"><b>3rd place</b><span>Queensland State Championships</span></p>
+        <video src="assets/drills.mp4" autoplay muted loop playsinline aria-label="Leigh Miller demonstrating running movement drills"></video>
+        <p class="fr fr-right"><b>7th in the world</b><span>World Triathlon Duathlon Championships, Townsville</span></p>
+        <p class="fr fr-bottom"><b>World qualifier</b><span>Toowoomba Wellcamp Duathlon</span></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHY RUN: photo | four boxes -->
+  <section class="split" id="why-run">
+    <div class="panel">
+      <div class="panel-inner wide">
+        <h2 class="h2">Run for More Than Race Day.</h2>
+        <p class="tag">Some people come to Kraken to run faster. Others come for everything running gives them along the way.</p>
+        <div class="mini-grid">
+          <article class="mini">
+            <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="7" cy="6" r="2.5"/><circle cx="17" cy="7" r="2"/><path d="M3 20v-4a4 4 0 0 1 4-4 4 4 0 0 1 4 4v4"/><path d="M13 20v-3a3.5 3.5 0 0 1 3.5-3.5A3.5 3.5 0 0 1 20 17v3"/></svg></div>
+            <h3>Make Friends</h3>
+            <p>Running is better together. Train, laugh and share the wins with a welcoming team.</p>
+          </article>
+          <article class="mini">
+            <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.8 8.6a5 5 0 0 0-8.8-3.2 5 5 0 0 0-8.8 3.2c0 5.4 8.8 10.4 8.8 10.4s8.8-5 8.8-10.4z"/><path d="M4 11h4l2-3 2 6 2-3h6"/></svg></div>
+            <h3>Feel Better</h3>
+            <p>Move more, get outside and feel stronger physically, clearer mentally and better overall.</p>
+          </article>
+          <article class="mini">
+            <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 17c2-2 4-1 5 0s3 2 5 0"/><path d="M13 5c0-1 1-2 2-2s2 1 2 2-1 3-2 5 0 3 0 3H9s-1-2 0-3 2-4 2-5"/><circle cx="19" cy="18" r="2"/></svg></div>
+            <h3>Lose Weight &amp; Build Fitness</h3>
+            <p>Start where you are and build fitness gradually with structured training and coaching at your level.</p>
+          </article>
+          <article class="mini">
+            <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6.5 6.5v11"/><path d="M17.5 6.5v11"/><path d="M3 9.5v5"/><path d="M21 9.5v5"/><path d="M6.5 12h11"/></svg></div>
+            <h3>Get Stronger</h3>
+            <p>Kraken combines running, drills and focused training to help you become stronger, more capable and keep progressing.</p>
+          </article>
+        </div>
+      </div>
+    </div>
+    <figure class="photo">
+      <img src="assets/group-sprint-oval.jpg" alt="Kraken runners of all ages, including a child, sprinting together across the oval at golden hour on the Gold Coast" style="object-position: 50% 60%">
+      <figcaption>Kraken session, Gold Coast</figcaption>
+    </figure>
+  </section>
+
+  <!-- PRICING -->
+  <section class="section band-bg" id="pricing">
+    <div class="wrap">
+      <div class="section-head">
+        <h2 class="h2">Train Your Way.</h2>
+        <p class="tag">Start free. Then choose the option that works for you.</p>
+      </div>
+      <div class="plans">
+        <article class="plan">
+          <h3>First Session</h3>
+          <div class="price free">Free</div>
+          <p>Meet Leigh, meet the team and experience a Kraken session for yourself.</p>
+        </article>
+        <article class="plan">
+          <h3>Pay As You Go</h3>
+          <div class="price">$14 <small>per session</small></div>
+          <p class="kids">Kids: <em>$7</em></p>
+          <p>Train when it suits you, with no ongoing commitment.</p>
+        </article>
+        <article class="plan plan-feature">
+          <span class="plan-flag">Best Value</span>
+          <h3>10 Session Pass</h3>
+          <div class="price">$110</div>
+          <p><strong>$11 per session</strong>, saving $30 compared with paying session by session. Use your pass across any Kraken group training day.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- FIRST SESSION: photo | steps -->
+  <section class="split flip" id="first-session">
+    <div class="panel">
+      <div class="panel-inner wide">
+        <h2 class="h2">Start With One Session.</h2>
+        <p class="tag">Your first Kraken session is free. Come meet Leigh, train with the team and see how it feels.</p>
+        <div class="copy">
+          <p>Joining a new running group can feel like a big step. Kraken makes it easy. Have a quick chat with Leigh, come along as you are, and she’ll make sure you feel welcome from the moment you arrive.</p>
+        </div>
+        <div class="mini-stack">
+          <article class="mini mini-row">
+            <div class="num">1</div>
+            <div><h3>Say Hi</h3><p>Message Leigh, share a little about your running and what you’d like to achieve.</p></div>
+          </article>
+          <article class="mini mini-row">
+            <div class="num">2</div>
+            <div><h3>Come Along</h3><p>Leigh will send you the meeting details. Bring your running shoes, some water and arrive a few minutes early.</p></div>
+          </article>
+          <article class="mini mini-row">
+            <div class="num">3</div>
+            <div><h3>You’ll Be Looked After</h3><p>Worried about keeping up or not knowing what to do? Don’t be. Leigh will guide you through the session, adjust things to your level and make sure you feel comfortable from the moment you start.</p></div>
+          </article>
+        </div>
+        <div class="actions">
+          <a class="btn btn-fill" href="https://m.me/KrakenSpeedRunning" target="_blank" rel="noopener">Message Leigh about my free session</a>
+        </div>
+      </div>
+    </div>
+    <figure class="photo">
+      <img src="assets/group.jpg" alt="Five smiling Kraken runners in a group selfie on the training field on the Gold Coast" style="object-position: 50% 35%">
+      <figcaption>The Kraken team, Gold Coast</figcaption>
+    </figure>
+  </section>
+
+  <!-- REVIEWS -->
+  <section class="section band-bg" id="reviews">
+    <div class="wrap">
+      <div class="reviews-head">
+        <div>
+          <h2 class="h2">What People Say About Kraken</h2>
+          <p class="tag" style="margin-top:10px; color: rgba(255,255,255,.92);">Kraken is built on more than training plans and race results. It’s the experience, support and progress people feel when they become part of the team.</p>
+        </div>
+      </div>
+      <div class="rcards">
+        <article class="rcard">
+          <div class="stars" aria-label="Five star review"><svg viewBox="0 0 24 24" fill="currentColor"><path d="m12 2 3.1 6.6 7.2.9-5.3 5 1.4 7.2L12 18.2l-6.4 3.5L7 14.5 1.7 9.5l7.2-.9z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="m12 2 3.1 6.6 7.2.9-5.3 5 1.4 7.2L12 18.2l-6.4 3.5L7 14.5 1.7 9.5l7.2-.9z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="m12 2 3.1 6.6 7.2.9-5.3 5 1.4 7.2L12 18.2l-6.4 3.5L7 14.5 1.7 9.5l7.2-.9z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="m12 2 3.1 6.6 7.2.9-5.3 5 1.4 7.2L12 18.2l-6.4 3.5L7 14.5 1.7 9.5l7.2-.9z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="m12 2 3.1 6.6 7.2.9-5.3 5 1.4 7.2L12 18.2l-6.4 3.5L7 14.5 1.7 9.5l7.2-.9z"/></svg></div>
+          <blockquote><p>“Being part of Kraken, I’ve seen firsthand how much care, knowledge and energy Leigh brings to every runner she works with.</p><p>What stands out most is that this isn’t just a running group where people turn up, do a session and go home. There’s real coaching behind it. Leigh pays attention to how people move, how they’re progressing and what they’re trying to achieve, whether that’s running their first 10K, improving a PB or competing at a serious level.</p><p>The atmosphere is just as important. People are encouraged, supported and made to feel like they belong from the moment they arrive.</p><p>Kraken has managed to create something rare: a genuinely welcoming running community with the standards, structure and technical coaching of a high-performance environment.</p><p>If you want to become a better runner, enjoy your training more and be surrounded by people who want to see you succeed, Kraken is an incredible place to do it.”</p></blockquote>
+          <div class="who"><span class="who-avatar" title="Reviewer photo placeholder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.6-6.5 8-6.5s8 2.5 8 6.5"/></svg></span><div><b>Matthew Saxen</b><span>Kraken member</span></div><span class="who-fb" aria-label="Review from Facebook"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M13.5 22v-8h2.7l.4-3.2h-3.1V8.8c0-.9.3-1.6 1.6-1.6h1.7V4.4c-.3 0-1.3-.1-2.5-.1-2.5 0-4.1 1.5-4.1 4.2v2.3H7.4V14h2.8v8z"/></svg></span></div>
+        </article>
+        <article class="rcard">
+          <div class="stars" aria-label="Five star review"><svg viewBox="0 0 24 24" fill="currentColor"><path d="m12 2 3.1 6.6 7.2.9-5.3 5 1.4 7.2L12 18.2l-6.4 3.5L7 14.5 1.7 9.5l7.2-.9z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="m12 2 3.1 6.6 7.2.9-5.3 5 1.4 7.2L12 18.2l-6.4 3.5L7 14.5 1.7 9.5l7.2-.9z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="m12 2 3.1 6.6 7.2.9-5.3 5 1.4 7.2L12 18.2l-6.4 3.5L7 14.5 1.7 9.5l7.2-.9z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="m12 2 3.1 6.6 7.2.9-5.3 5 1.4 7.2L12 18.2l-6.4 3.5L7 14.5 1.7 9.5l7.2-.9z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="m12 2 3.1 6.6 7.2.9-5.3 5 1.4 7.2L12 18.2l-6.4 3.5L7 14.5 1.7 9.5l7.2-.9z"/></svg></div>
+          <blockquote><p>“An amazing club for all levels! In just 3 months I knocked 3 minutes off my parkrun time and I’m now preparing for my first half marathon thanks to the training program. Leigh will meet you at whatever your ability and do what works for you. The Kraken community is honestly the best.”</p></blockquote>
+          <div class="who"><span class="who-avatar" title="Reviewer photo placeholder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.6-6.5 8-6.5s8 2.5 8 6.5"/></svg></span><div><b>Alex Sellers</b><span>Kraken member</span></div><span class="who-fb" aria-label="Review from Facebook"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M13.5 22v-8h2.7l.4-3.2h-3.1V8.8c0-.9.3-1.6 1.6-1.6h1.7V4.4c-.3 0-1.3-.1-2.5-.1-2.5 0-4.1 1.5-4.1 4.2v2.3H7.4V14h2.8v8z"/></svg></span></div>
+        </article>
+        <article class="rcard">
+          <div class="stars" aria-label="Five star review"><svg viewBox="0 0 24 24" fill="currentColor"><path d="m12 2 3.1 6.6 7.2.9-5.3 5 1.4 7.2L12 18.2l-6.4 3.5L7 14.5 1.7 9.5l7.2-.9z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="m12 2 3.1 6.6 7.2.9-5.3 5 1.4 7.2L12 18.2l-6.4 3.5L7 14.5 1.7 9.5l7.2-.9z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="m12 2 3.1 6.6 7.2.9-5.3 5 1.4 7.2L12 18.2l-6.4 3.5L7 14.5 1.7 9.5l7.2-.9z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="m12 2 3.1 6.6 7.2.9-5.3 5 1.4 7.2L12 18.2l-6.4 3.5L7 14.5 1.7 9.5l7.2-.9z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="m12 2 3.1 6.6 7.2.9-5.3 5 1.4 7.2L12 18.2l-6.4 3.5L7 14.5 1.7 9.5l7.2-.9z"/></svg></div>
+          <blockquote><p>“I started running with Kraken a couple of months ago. Leigh is an amazing coach, being an elite athlete herself, she really does know her stuff.</p><p>The diligence she puts into warm up and cool downs sessions is fantastic, very rare in running clubs.</p><p>I am carrying an injury so Leigh shaped my sessions individually to ensure I could still keep the legs turning over without worsening the issue.</p><p>I can’t recommend Kraken enough, whether you’re a new starter or a seasoned runner, Leigh ensures everyone is included. Get out there with this group runners, couldn’t meet a nicer bunch, and your form will improve.”</p></blockquote>
+          <div class="who"><span class="who-avatar" title="Reviewer photo placeholder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.6-6.5 8-6.5s8 2.5 8 6.5"/></svg></span><div><b>Keith Johnson</b><span>Kraken member</span></div><span class="who-fb" aria-label="Review from Facebook"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M13.5 22v-8h2.7l.4-3.2h-3.1V8.8c0-.9.3-1.6 1.6-1.6h1.7V4.4c-.3 0-1.3-.1-2.5-.1-2.5 0-4.1 1.5-4.1 4.2v2.3H7.4V14h2.8v8z"/></svg></span></div>
+        </article>
+        <article class="rcard">
+          <div class="stars" aria-label="Five star review"><svg viewBox="0 0 24 24" fill="currentColor"><path d="m12 2 3.1 6.6 7.2.9-5.3 5 1.4 7.2L12 18.2l-6.4 3.5L7 14.5 1.7 9.5l7.2-.9z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="m12 2 3.1 6.6 7.2.9-5.3 5 1.4 7.2L12 18.2l-6.4 3.5L7 14.5 1.7 9.5l7.2-.9z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="m12 2 3.1 6.6 7.2.9-5.3 5 1.4 7.2L12 18.2l-6.4 3.5L7 14.5 1.7 9.5l7.2-.9z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="m12 2 3.1 6.6 7.2.9-5.3 5 1.4 7.2L12 18.2l-6.4 3.5L7 14.5 1.7 9.5l7.2-.9z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="m12 2 3.1 6.6 7.2.9-5.3 5 1.4 7.2L12 18.2l-6.4 3.5L7 14.5 1.7 9.5l7.2-.9z"/></svg></div>
+          <blockquote><p>“I can’t recommend Kraken Speed Running enough. I started as a guy who did parkruns that thought he knew how to run. My speed has improved, my times have improved, I have learned so much. Leigh is such a good coach and always keeps it fun and interesting while pushing us. The crew that train have become mates and we always encourage one another. Come and join us for a lesson or two. Let’s have a race.”</p></blockquote>
+          <div class="who"><span class="who-avatar" title="Reviewer photo placeholder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.6-6.5 8-6.5s8 2.5 8 6.5"/></svg></span><div><b>Robert Ross</b><span>Kraken member</span></div><span class="who-fb" aria-label="Review from Facebook"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M13.5 22v-8h2.7l.4-3.2h-3.1V8.8c0-.9.3-1.6 1.6-1.6h1.7V4.4c-.3 0-1.3-.1-2.5-.1-2.5 0-4.1 1.5-4.1 4.2v2.3H7.4V14h2.8v8z"/></svg></span></div>
+        </article>
+        <article class="rcard">
+          <div class="stars" aria-label="Five star review"><svg viewBox="0 0 24 24" fill="currentColor"><path d="m12 2 3.1 6.6 7.2.9-5.3 5 1.4 7.2L12 18.2l-6.4 3.5L7 14.5 1.7 9.5l7.2-.9z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="m12 2 3.1 6.6 7.2.9-5.3 5 1.4 7.2L12 18.2l-6.4 3.5L7 14.5 1.7 9.5l7.2-.9z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="m12 2 3.1 6.6 7.2.9-5.3 5 1.4 7.2L12 18.2l-6.4 3.5L7 14.5 1.7 9.5l7.2-.9z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="m12 2 3.1 6.6 7.2.9-5.3 5 1.4 7.2L12 18.2l-6.4 3.5L7 14.5 1.7 9.5l7.2-.9z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="m12 2 3.1 6.6 7.2.9-5.3 5 1.4 7.2L12 18.2l-6.4 3.5L7 14.5 1.7 9.5l7.2-.9z"/></svg></div>
+          <blockquote><p>“I’m absolutely loving Kraken Speed Running! 🏃‍♂️🔥</p><p>This has been such a fun and motivating way to get fitter while enjoying something social. Even on the days I need to slow down or walk, it’s completely encouraged to go at my own pace. No pressure, just progress. I’ve already noticed I’m getting faster and stronger, and I’m even losing a bit of belly fat along the way!</p><p>The coach is genuinely lovely. Always supportive, uplifting, and makes everyone feel welcome no matter their level. It’s such a great mix of exercise and community, and the vibe makes me want to keep showing up. Plus, it’s really affordable, which makes it even better.</p><p>If you’re looking for something fun, encouraging, and effective, I seriously can’t recommend Kraken Speed Running enough. I love it!”</p></blockquote>
+          <div class="who"><span class="who-avatar" title="Reviewer photo placeholder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.6-6.5 8-6.5s8 2.5 8 6.5"/></svg></span><div><b>Kimberley Wilkison</b><span>Kraken member</span></div><span class="who-fb" aria-label="Review from Facebook"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M13.5 22v-8h2.7l.4-3.2h-3.1V8.8c0-.9.3-1.6 1.6-1.6h1.7V4.4c-.3 0-1.3-.1-2.5-.1-2.5 0-4.1 1.5-4.1 4.2v2.3H7.4V14h2.8v8z"/></svg></span></div>
+        </article>
+        <article class="rcard">
+          <div class="stars" aria-label="Five star review"><svg viewBox="0 0 24 24" fill="currentColor"><path d="m12 2 3.1 6.6 7.2.9-5.3 5 1.4 7.2L12 18.2l-6.4 3.5L7 14.5 1.7 9.5l7.2-.9z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="m12 2 3.1 6.6 7.2.9-5.3 5 1.4 7.2L12 18.2l-6.4 3.5L7 14.5 1.7 9.5l7.2-.9z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="m12 2 3.1 6.6 7.2.9-5.3 5 1.4 7.2L12 18.2l-6.4 3.5L7 14.5 1.7 9.5l7.2-.9z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="m12 2 3.1 6.6 7.2.9-5.3 5 1.4 7.2L12 18.2l-6.4 3.5L7 14.5 1.7 9.5l7.2-.9z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="m12 2 3.1 6.6 7.2.9-5.3 5 1.4 7.2L12 18.2l-6.4 3.5L7 14.5 1.7 9.5l7.2-.9z"/></svg></div>
+          <blockquote><p>“I started training with Kraken Speed Running just over a month ago.</p><p>With guidance and support from Leigh and the other runners in the group, I have gained confidence, technique and speed, with new PB’s and a new love for running.</p><p>I genuinely look forward to training days now.”</p></blockquote>
+          <div class="who"><span class="who-avatar" title="Reviewer photo placeholder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.6-6.5 8-6.5s8 2.5 8 6.5"/></svg></span><div><b>Ange Morrison</b><span>Kraken member</span></div><span class="who-fb" aria-label="Review from Facebook"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M13.5 22v-8h2.7l.4-3.2h-3.1V8.8c0-.9.3-1.6 1.6-1.6h1.7V4.4c-.3 0-1.3-.1-2.5-.1-2.5 0-4.1 1.5-4.1 4.2v2.3H7.4V14h2.8v8z"/></svg></span></div>
+        </article>
+      </div>
+      <div class="reviews-foot">
+        <a class="btn btn-line btn-sm" href="https://www.facebook.com/KrakenSpeedRunning" target="_blank" rel="noopener">Read the reviews on Facebook</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="section white" id="faq">
+    <div class="wrap faq-wrap">
+      <div class="faq-head">
+        <h2 class="h2">Frequently asked questions</h2>
+      </div>
+      <div class="faq-list" id="faqList">
+        <details open>
+          <summary>What if I'm the slowest person there?<span class="plus" aria-hidden="true"></span></summary>
+          <div class="answer">
+            <p>That's completely fine. Sessions aren't based on everyone running at the same pace. Leigh will help you work at a level that's right for where you're at now.</p>
+          </div>
+        </details>
+        <details>
+          <summary>Will the sessions challenge me if I'm already an experienced runner?<span class="plus" aria-hidden="true"></span></summary>
+          <div class="answer">
+            <p>Yes. Kraken is welcoming to beginners, but the training isn't only for beginners. Experienced and competitive runners work at the speed and volume that match their goals.</p>
+          </div>
+        </details>
+        <details>
+          <summary>Do I have to race?<span class="plus" aria-hidden="true"></span></summary>
+          <div class="answer">
+            <p>No. Some runners compete. Others want to get fitter, meet people and enjoy running as part of a team. <strong>Your goal is your goal.</strong></p>
+          </div>
+        </details>
+        <details>
+          <summary>Do I need to book?<span class="plus" aria-hidden="true"></span></summary>
+          <div class="answer">
+            <p>There's no formal booking process. Message Leigh before your first session so she can send you the details.</p>
+          </div>
+        </details>
+        <details>
+          <summary>Do I have to come every week?<span class="plus" aria-hidden="true"></span></summary>
+          <div class="answer">
+            <p>No. Choose the sessions that work for you. Pay-as-you-go gives you flexibility, and the 10 Session Pass gives you a lower price if you're training regularly.</p>
+          </div>
+        </details>
+        <details>
+          <summary>Where exactly do you meet?<span class="plus" aria-hidden="true"></span></summary>
+          <div class="answer">
+            <p>Around the <strong>Gold Coast, Queensland</strong>. The meeting point changes with the workout and is shared each week on Facebook.</p>
+          </div>
+        </details>
+        <details>
+          <summary>What happens if it rains?<span class="plus" aria-hidden="true"></span></summary>
+          <div class="answer">
+            <p>Check the Kraken Speed Running Facebook page before leaving home. Any changes or cancellations due to unsafe weather are posted there.</p>
+          </div>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section class="msg" id="contact">
+    <div class="wrap">
+      <div class="msg-left">
+        <div class="msg-card">
+          <div>
+            <h3>Message Leigh</h3>
+            <p>Tell her a little about your running and she'll get back to you with the details for your first session.</p>
+          </div>
+          <form class="form" id="contactForm" novalidate>
+            <input type="text" name="website" style="display:none" tabindex="-1" autocomplete="off">
+            <div class="form-row">
+              <div class="field">
+                <label for="f-name">Name</label>
+                <input id="f-name" name="name" type="text" autocomplete="name" required>
+              </div>
+              <div class="field">
+                <label for="f-email">Email</label>
+                <input id="f-email" name="email" type="email" autocomplete="email" required>
+              </div>
+            </div>
+            <div class="field">
+              <label for="f-phone">Phone (optional)</label>
+              <input id="f-phone" name="phone" type="tel" autocomplete="tel">
+            </div>
+            <div class="field">
+              <label for="f-msg">Your message</label>
+              <textarea id="f-msg" name="message" required placeholder="I'm brand new to running. / I'm getting back into it. / I run 5 km and want to get faster."></textarea>
+            </div>
+            <button class="btn btn-fill" type="submit" id="contactSend">Send message</button>
+            <p class="form-note" id="contactStatus" role="status" aria-live="polite"></p>
+          </form>
+        </div>
+        <div class="msg-alt">
+          <span>Prefer to chat now?</span>
+          <a href="https://m.me/KrakenSpeedRunning" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.5 2 2 6.1 2 11.3c0 2.9 1.4 5.5 3.7 7.2V22l3.4-1.9c.9.3 1.9.4 2.9.4 5.5 0 10-4.1 10-9.2S17.5 2 12 2zm1 12.4-2.5-2.7-5 2.7 5.5-5.8 2.6 2.7 4.9-2.7-5.5 5.8z"/></svg>Message on Facebook</a>
+        </div>
+      </div>
+      <div class="msg-right">
+        <h2 class="h2">Come and run with us</h2>
+        <p class="tag">Your first group session is free.</p>
+        <div class="copy">
+          <p>Message Leigh, come along and see how it feels. She'll send you this week's meeting point, answer any questions and be there to welcome you when you arrive.</p>
+        </div>
+        <div class="msg-contact">
+          <a href="mailto:hello@krakenspeedrunning.com.au"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>hello@krakenspeedrunning.com.au</a>
+          <a href="tel:+61400797038"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 2 .7 2.9a2 2 0 0 1-.5 2.1L8 10a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.5c.9.3 1.9.6 2.9.7a2 2 0 0 1 1.7 2z"/></svg>0400 797 038</a>
+          <a href="https://www.facebook.com/KrakenSpeedRunning" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M13.5 22v-8h2.7l.4-3.2h-3.1V8.8c0-.9.3-1.6 1.6-1.6h1.7V4.4c-.3 0-1.3-.1-2.5-.1-2.5 0-4.1 1.5-4.1 4.2v2.3H7.4V14h2.8v8z"/></svg>Kraken Speed Running on Facebook</a>
+          <span style="display:flex;align-items:center;gap:10px;font-weight:600;font-size:var(--fs-card);color:rgba(255,255,255,.9)"><span style="color:var(--aqua);display:inline-flex"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s7-6.3 7-12a7 7 0 1 0-14 0c0 5.7 7 12 7 12z"/><circle cx="12" cy="10" r="2.5"/></svg></span>Sessions around the Gold Coast, QLD</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
 </main>
+
+
+
+<div class="mobile-bar">
+  <a class="btn btn-fill" href="https://m.me/KrakenSpeedRunning" target="_blank" rel="noopener">Free session</a>
+  <a class="btn btn-line" href="https://m.me/KrakenSpeedRunning" target="_blank" rel="noopener">Message Leigh</a>
+</div>
+
+<script>
+  var toggle = document.getElementById('navToggle');
+  var nav = document.getElementById('nav');
+  toggle.addEventListener('click', function () {
+    var open = nav.classList.toggle('open');
+    toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+    toggle.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+  });
+  nav.addEventListener('click', function (e) {
+    if (e.target.tagName === 'A') { nav.classList.remove('open'); toggle.setAttribute('aria-expanded', 'false'); }
+  });
+  if ('IntersectionObserver' in window && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) { if (en.isIntersecting) { en.target.classList.add('in'); io.unobserve(en.target); } });
+    }, { rootMargin: '0px 0px -6% 0px', threshold: 0.05 });
+    document.querySelectorAll('.reveal').forEach(function (el) { io.observe(el); });
+  } else {
+    document.querySelectorAll('.reveal').forEach(function (el) { el.classList.add('in'); });
+  }
+
+  var CONTACT_ENDPOINT = "https://kraken-contact.bitter-cloud-8ad6.workers.dev";
+  var cForm = document.getElementById('contactForm');
+  if (cForm) {
+    cForm.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var btn = document.getElementById('contactSend');
+      var status = document.getElementById('contactStatus');
+      var data = {
+        name: cForm.querySelector('[name=name]').value,
+        email: cForm.querySelector('[name=email]').value,
+        phone: cForm.querySelector('[name=phone]').value,
+        message: cForm.querySelector('[name=message]').value,
+        website: cForm.querySelector('[name=website]').value
+      };
+      if (!data.name.trim() || !data.email.trim() || !data.message.trim()) {
+        status.textContent = 'Please fill in your name, email and message.';
+        return;
+      }
+      btn.disabled = true;
+      btn.textContent = 'Sending...';
+      status.textContent = '';
+      fetch(CONTACT_ENDPOINT, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data) })
+        .then(function (r) { return r.json().then(function (j) { return { ok: r.ok && j.ok, j: j }; }); })
+        .then(function (res) {
+          if (res.ok) {
+            cForm.reset();
+            btn.textContent = 'Message sent';
+            status.textContent = "Thanks! Your message is on its way to Leigh. Check your inbox for a confirmation email.";
+          } else {
+            btn.disabled = false;
+            btn.textContent = 'Send message';
+            status.textContent = (res.j && res.j.error) || 'Something went wrong. Please try again, or email hello@krakenspeedrunning.com.au.';
+          }
+        })
+        .catch(function () {
+          btn.disabled = false;
+          btn.textContent = 'Send message';
+          status.textContent = 'Something went wrong. Please try again, or email hello@krakenspeedrunning.com.au.';
+        });
+    });
+  }
+</script>
 </body>
 </html>
