@@ -284,11 +284,7 @@
   @media (min-width: 641px) { .site-footer { padding-bottom: clamp(36px, 4vw, 56px); } }
 
   /* ---- mobile bar ---- */
-  .mobile-bar { display: none; }
   @media (max-width: 640px) {
-    .mobile-bar { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; position: fixed; left: 0; right: 0; bottom: 0; z-index: 60; padding: 10px 14px calc(10px + env(safe-area-inset-bottom)); background: rgba(255,255,255,.96); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border-top: 1px solid var(--line); }
-    .mobile-bar .btn { padding: 12px 10px; font-size: 14.5px; }
-    .mobile-bar .btn-line { color: var(--teal); border-color: rgba(30,111,122,.45); }
   }
 
 
@@ -407,7 +403,7 @@
     .drill-frame { grid-template-columns: 1fr; gap: 14px; justify-items: center; }
     .fr { flex-wrap: wrap; row-gap: 2px; justify-self: center; width: fit-content; max-width: 100%; }
     .fr-left, .fr-right { writing-mode: horizontal-tb; transform: none; align-self: center; padding: 12px 34px; clip-path: polygon(0 0, 100% 0, calc(100% - 14px) 50%, 100% 100%, 0 100%, 14px 50%); }
-    .drill-frame video, .drill-frame .drill-embed { justify-self: center; }
+    .drill-frame video, .drill-frame .drill-embed { justify-self: center; order: -1; }
   }
   .band-bg { background: var(--band); color: var(--white); }
   .band-bg .tag { color: rgba(255,255,255,.92); }
@@ -429,6 +425,20 @@
   @media (max-width: 1100px) { .band-bg .plans { grid-template-columns: repeat(2, 1fr); } }
   @media (max-width: 640px) { .band-bg .plans { grid-template-columns: 1fr; } }
   .rcard blockquote p + p { margin-top: 10px; }
+  /* ---- footer ---- */
+  .footer { background: var(--ink); color: rgba(255,255,255,.85); }
+  .footer-main { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 24px 40px; padding: 38px 0 28px; }
+  .footer .brand-name { color: var(--white); }
+  .footer .brand-name span { color: var(--aqua); }
+  .footer-nav { display: flex; flex-wrap: wrap; gap: 10px 26px; }
+  .footer-nav a { font-weight: 600; font-size: 15px; text-decoration: none; color: rgba(255,255,255,.85); white-space: nowrap; }
+  .footer-nav a:hover { color: var(--aqua); }
+  .footer-contact { display: grid; gap: 9px; font-size: var(--fs-label); font-weight: 600; letter-spacing: .02em; }
+  .footer-contact a, .footer-contact span { text-decoration: none; display: inline-flex; align-items: center; gap: 8px; color: rgba(255,255,255,.85); }
+  .footer-contact a:hover { color: var(--aqua); }
+  .footer-contact svg { width: 14px; height: 14px; color: var(--aqua); flex: none; }
+  .footer-bottom { border-top: 1px solid var(--line-dark); padding: 15px 0 20px; font-size: 12.5px; color: var(--mute); display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px 24px; }
+  @media (max-width: 720px) { .footer-main { flex-direction: column; align-items: flex-start; } }
   body { background: var(--panel); }
 </style>
 </head>
@@ -821,10 +831,31 @@
 
 
 
-<div class="mobile-bar">
-  <a class="btn btn-fill" href="https://m.me/KrakenSpeedRunning" target="_blank" rel="noopener">Free session</a>
-  <a class="btn btn-line" href="https://m.me/KrakenSpeedRunning" target="_blank" rel="noopener">Message Leigh</a>
-</div>
+<footer class="footer">
+  <div class="wrap footer-main">
+    <a class="brand" href="#top" aria-label="Kraken Speed Running home">
+      <img src="assets/kraken-logo.png" alt="" width="46" height="46">
+      <span class="brand-name">Kraken<span>Speed Running</span></span>
+    </a>
+    <nav class="footer-nav" aria-label="Footer">
+      <a href="#top">Home</a>
+      <a href="#coach">Your Coach</a>
+      <a href="#gallery">Gallery</a>
+      <a href="#pricing">Pricing</a>
+      <a href="#performance-coaching">Performance Coaching</a>
+      <a href="#contact">Contact</a>
+    </nav>
+    <div class="footer-contact">
+      <a href="mailto:hello@krakenspeedrunning.com.au"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>hello@krakenspeedrunning.com.au</a>
+      <a href="tel:+61400797038"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 2 .7 2.9a2 2 0 0 1-.5 2.1L8 10a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.5c.9.3 1.9.6 2.9.7a2 2 0 0 1 1.7 2z"/></svg>0400 797 038</a>
+      <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s7-6.3 7-12a7 7 0 1 0-14 0c0 5.7 7 12 7 12z"/><circle cx="12" cy="10" r="2.5"/></svg>Gold Coast QLD</span>
+    </div>
+  </div>
+  <div class="wrap footer-bottom">
+    <span>&copy; 2026 Kraken Speed Running</span>
+    <span>Coached running on the Gold Coast</span>
+  </div>
+</footer>
 
 <script>
   var toggle = document.getElementById('navToggle');
